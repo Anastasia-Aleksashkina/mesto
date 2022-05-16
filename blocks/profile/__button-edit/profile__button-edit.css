@@ -1,6 +1,7 @@
 .profile__button-edit {
   width: 24px;
   height: 24px;
+  background: 24px 24px;
   border: 1px solid #ffffff;
   box-sizing: border-box;
   background-image: url(../../../images/edit\ button.svg);
@@ -19,5 +20,6 @@
   .profile__button-edit {
     width: 18px;
     height: 18px;
+    background: 18px 18px;
   }
 }
