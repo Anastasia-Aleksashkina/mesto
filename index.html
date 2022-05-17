@@ -18,11 +18,11 @@
           <div class="profile__info">
             <div class="profile__user">
               <h1 class="profile__user-name">Жак-Ив Кусто</h1>
-              <button class="profile__button-edit"></button>
+              <button type="button" class="profile__button-edit"></button>
             </div>
             <p class="profile__user-about">Исследователь океана</p>
           </div>
-          <button class="profile__button-edd"></button>
+          <button type="button" class="profile__button-edd"></button>
         </div>
       </section>
       <section class="elements root__elements">
@@ -36,7 +36,7 @@
           </li>
           <li class="element__info">
             <h3 class="element__city">Карачаевск</h3>
-            <button class="element__like"></button>
+            <button type="button" class="element__like"></button>
           </li>
         </ul>
         <ul class="element">
@@ -49,7 +49,7 @@
           </li>
           <li class="element__info">
             <h3 class="element__city">Гора Эльбрус</h3>
-            <button class="element__like"></button>
+            <button type="button" class="element__like"></button>
           </li>
         </ul>
         <ul class="element">
@@ -62,7 +62,7 @@
           </li>
           <li class="element__info">
             <h3 class="element__city">Домбай</h3>
-            <button class="element__like"></button>
+            <button type="button" class="element__like"></button>
           </li>
         </ul>
         <ul class="element">
@@ -75,7 +75,7 @@
           </li>
           <li class="element__info">
             <h3 class="element__city">Гора Эльбрус</h3>
-            <button class="element__like"></button>
+            <button type="button" class="element__like"></button>
           </li>
         </ul>
         <ul class="element">
@@ -88,7 +88,7 @@
           </li>
           <li class="element__info">
             <h3 class="element__city">Домбай</h3>
-            <button class="element__like"></button>
+            <button type="button" class="element__like"></button>
           </li>
         </ul>
         <ul class="element">
@@ -101,7 +101,7 @@
           </li>
           <li class="element__info">
             <h3 class="element__city">Карачаево-Черкесия</h3>
-            <button class="element__like"></button>
+            <button type="button" class="element__like"></button>
           </li>
         </ul>
       </section>
@@ -111,12 +111,14 @@
     </main>
     <div class="popup">
       <div class="popup__container">
-        <button class="popup__button-close"></button>
-        <form class="popup__form">
+        <button type="button" class="popup__button-close"></button>
+        <form name="form" class="popup__form">
           <h3 class="popup__title">Редактировать профиль</h3>
-          <input type="text" class="popup__string-name" value="Жак-Ив Кусто" />
-          <input type="text" class="popup__string-about" value="Исследователь океана" />
-          <button type="submit" class="popup__button-save">Сохранить</button>
+          <input type="text" name="string" class="popup__string-name" />
+          <input type="text" name="string" class="popup__string-about" />
+          <button type="submit" type="submit" class="popup__button-save">
+            Сохранить
+          </button>
         </form>
       </div>
     </div>
