@@ -3,7 +3,6 @@ const popupNewCard = document.querySelector(".popup_new-card");
 const popupNewImage = document.querySelector(".popup_image");
 const formElementUser = document.querySelector(".popup__form");
 const formElementCard = document.querySelector(".popup__form_new-card");
-const formElementImage = document.querySelector(".popup__form_image");
 const openPopup = (popupElement) => {
   popupElement.classList.add("popup_opened");
 };
@@ -21,29 +20,25 @@ const cityFieldElement = formElementCard.querySelector(
 const linktFieldElement = formElementCard.querySelector(
   ".popup__string-about_new-card"
 );
+const imageFieldElement = document.querySelector(".popup__image-src");
+const captionFieldElement = document.querySelector(".popup__caption");
 const editButtonUser = document.querySelector(".profile__button-edit");
 const editButtonCard = document.querySelector(".profile__button-edd");
-const editImageCard = document.querySelector(".popup__image");
 const nameElement = document.querySelector(".profile__user-name");
 const aboutElement = document.querySelector(".profile__user-about");
+const imageElement = document.querySelector(".element__image");
+const cityElement = document.querySelector(".element__city");
+
 const cardContainer = document.querySelector(".elements");
 const getCardByElement = (e) => e.currentTarget.closest(".element");
 
 nameFieldElement.value = nameElement.textContent;
 aboutFieldElement.value = aboutElement.textContent;
 
-//попап с картинкой
-const openImagePopup = (e) => {
-  const imageElement = getCardByElement(e);
-  openPopup(popupNewImage);
-  popupNewImage.link = imageElement.querySelector(".popup__image").src;
-  popupNewImage.name = imageElement.querySelector(".popup__caption").textContent;
-};
-
-
 const addCard = (element) => {
   const cardTemplate = document.querySelector("#element-template").content;
   const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
+  const cardImage = cardElement.querySelector(".element__image");
   cardElement.querySelector(".element__city").textContent = element.name;
   cardElement.querySelector(".element__image").src = element.link;
   cardElement.querySelector(".element__like").addEventListener("click", (e) => {
@@ -55,10 +50,20 @@ const addCard = (element) => {
       const element = getCardByElement(e);
       element.remove();
     });
+  cardImage.addEventListener("click", () => {
+    openPopup(popupNewImage);
+    openImagePopup(element);
+  });
   cardContainer.prepend(cardElement);
-  popupNewImage.addEventListener("click", openImagePopup);
+  return cardElement;
 };
+
 initialCards.forEach(addCard);
+
+const openImagePopup = (element) => {
+  imageFieldElement.src = element.link;
+  captionFieldElement.textContent = element.name;
+};
 
 const handlerProfileSubmit = (e) => {
   e.preventDefault();
@@ -75,6 +80,7 @@ const handlerCardSubmit = (e) => {
   };
   addCard(card);
   closePopup(popupNewCard);
+  formElementCard.reset();
 };
 
 editButtonUser.addEventListener("click", () => openPopup(popupUser));
