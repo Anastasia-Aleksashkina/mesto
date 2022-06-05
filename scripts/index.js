@@ -32,6 +32,15 @@ const getCardByElement = (e) => e.currentTarget.closest(".element");
 nameFieldElement.value = nameElement.textContent;
 aboutFieldElement.value = aboutElement.textContent;
 
+//попап с картинкой
+const openImagePopup = (e) => {
+  const imageElement = getCardByElement(e);
+  openPopup(popupNewImage);
+  popupNewImage.link = imageElement.querySelector(".popup__image").src;
+  popupNewImage.name = imageElement.querySelector(".popup__caption").textContent;
+};
+
+
 const addCard = (element) => {
   const cardTemplate = document.querySelector("#element-template").content;
   const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
@@ -47,6 +56,7 @@ const addCard = (element) => {
       element.remove();
     });
   cardContainer.prepend(cardElement);
+  popupNewImage.addEventListener("click", openImagePopup);
 };
 initialCards.forEach(addCard);
 
@@ -66,15 +76,6 @@ const handlerCardSubmit = (e) => {
   addCard(card);
   closePopup(popupNewCard);
 };
-
-//попап с картинкой
-const openImagePopup = (e) => {
-  const imageElement = getCardByElement(e);
-  openPopup();
-  linktFieldElement.value = imageElement.querySelector(".popup__image").src;
-  cityFieldElement.value = imageElement.querySelector(".popup__caption").textContent;
-};
-popupNewImage.addEventListener("click", openImagePopup);
 
 editButtonUser.addEventListener("click", () => openPopup(popupUser));
 editButtonCard.addEventListener("click", () => openPopup(popupNewCard));
