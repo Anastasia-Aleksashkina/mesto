@@ -51,7 +51,6 @@ const createCard = (item) => {
   const cardTemplate = document.querySelector("#element-template").content;
   const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
   const cardImage = cardElement.querySelector(".element__image");
-  // const addButton = document.querySelector(".popup__button-save");
   cardElement.querySelector(".element__city").textContent = item.name;
   cardImage.src = item.link;
   cardImage.alt = item.name;
@@ -68,7 +67,7 @@ const createCard = (item) => {
     openPopup(popupImage);
     openImagePopup(item);
   });
-  // addButton.setAttribute("disabled", true);
+
   return cardElement;
 };
 
