@@ -33,50 +33,65 @@
     <div class="popup popup_profile">
       <div class="popup__container">
         <button type="button" class="popup__button-close"></button>
-        <form name="form" class="popup__form">
+        <form name="form" class="popup__form" novalidate>
           <h3 class="popup__title">Редактировать профиль</h3>
-          <input type="text" name="name" class="popup__string-name" />
-          <input type="text" name="about" class="popup__string-about" />
-          <button type="submit" class="popup__button-save">Сохранить</button>
+          <input
+            id="name-input"
+            type="text"
+            name="name"
+            class="popup__input popup__input-name"
+            required
+            minlength="2"
+            maxlength="40"
+          />
+          <span class="popup__input-error"></span>
+          <input
+            id="about-input"
+            type="text"
+            name="about"
+            class="popup__input popup__input-about"
+            required
+            minlength="2"
+            maxlength="200"
+          />
+          <span class="popup__input-error"></span>
+          <button type="submit" class="popup__button">Сохранить</button>
         </form>
       </div>
     </div>
     <div class="popup popup_new-card">
       <div class="popup__container">
-        <button
-          type="button"
-          class="popup__button-close popup__button-close_new-card"
-        ></button>
-        <form name="form" class="popup__form popup__form_new-card">
+        <button type="button" class="popup__button-close"></button>
+        <form name="form" class="popup__form popup__form_new-card" novalidate>
           <h3 class="popup__title">Новое место</h3>
           <input
+            id="name-input"
             type="text"
             name="name"
-            class="popup__string-name popup__string-name_new-card"
+            class="popup__input popup__input-city"
             placeholder="Название"
+            required
+            minlength="2"
+            maxlength="30"
           />
+          <span class="popup__input-error"></span>
           <input
+            id="link-input"
             type="url"
             name="link"
-            class="popup__string-about popup__string-about_new-card"
+            class="popup__input popup__input-link"
             placeholder="Ссылка на картинку"
+            required
           />
-          <button
-            type="submit"
-            class="popup__button-save popup__button-save_image"
-          >
-            Создать
-          </button>
+          <span class="popup__input-error"></span>
+          <button type="submit" class="popup__button">Создать</button>
         </form>
       </div>
     </div>
     <div class="popup popup_image">
       <div class="popup__container popup__container_image">
         <figure class="popup__image-element">
-          <button
-            type="button"
-            class="popup__button-close popup__button-close_image"
-          ></button>
+          <button type="button" class="popup__button-close"></button>
           <img src="#" alt="Фотография города" class="popup__image-src" />
           <figcaption class="popup__caption"></figcaption>
         </figure>
@@ -94,6 +109,7 @@
         </li>
       </ul>
     </template>
+    <script src="./scripts/validate.js"></script>
     <script src="./scripts/cards.js"></script>
     <script src="./scripts/index.js"></script>
   </body>
