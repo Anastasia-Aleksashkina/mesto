@@ -19,28 +19,28 @@ const showInputError = (formElement, inputElement, errorMessage, dataElement) =>
 const hideInputError = (formElement, inputElement, dataElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(dataElement.inputErrorClass);
-  errorElement.classList.remove(dataElement.errorClass);
   errorElement.textContent = "";
+  errorElement.classList.remove(dataElement.errorClass);
 };
 
 // Проверить валидность ввода
-const checkInputValidity = (formElement, inputElement) => {
+const checkInputValidity = (formElement, inputElement, dataElement) => {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(formElement, inputElement, inputElement.validationMessage, dataElement);
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputList, dataElement);
   }
 };
 
 // Переключение состояния кнопки
-const toggleButtonState = (inputList, dataElement) => {
+const toggleButtonState = (inputList, buttonElement, dataElement) => {
   // Если есть хотя бы один невалидный инпут
   if (hasInvalidInput(inputList, dataElement)) {
     // сделай кнопку неактивной
     buttonElement.classList.add(dataElement.inactiveButtonClass);
   } else {
     // иначе сделай кнопку активной
-    buttonElement.classList.remove(dataElement.submitButtonSelector);
+    buttonElement.classList.remove(dataElement.inactiveButtonClass);
   }
 };
 
@@ -49,14 +49,14 @@ const setEventListeners = (formElement, dataElement) => {
   const inputList = Array.from(formElement.querySelectorAll(dataElement.inputSelector));
   const buttonElement = formElement.querySelector(dataElement.submitButtonSelector);
   // Проверка состояния кнопки в самом начале
-  toggleButtonState(inputList, buttonElement);
+  toggleButtonState(inputList, buttonElement, dataElement);
 
-  inputList.forEach((inputElement) => {
+  inputList.forEach((inputElement, dataElement) => {
     inputElement.addEventListener("input", () => {
       // Внутри колбэка вызываем функцию проверки валидности ввода, передавая форму и проверяемый элемент
-      checkInputValidity(formElement, inputElement);
+      checkInputValidity(formElement, inputElement, dataElement);
       // Проверка состояния кнопки при изменении любого из полей
-      toggleButtonState(inputList, buttonElement);
+      toggleButtonState(inputList, buttonElement, dataElement);
     });
   });
 };
@@ -78,7 +78,7 @@ const enableValidation = (dataElement) => {
     formElement.addEventListener("submit", (e) => {
       e.preventDefault();
     });
-  setEventListeners(formElement);
+  setEventListeners(formElement, dataElement);
   });
 };
 
