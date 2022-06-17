@@ -45,8 +45,8 @@ const toggleButtonState = (inputList, dataElement) => {
 };
 
 const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll(dataElement.formSelector));
-  const buttonElement = formElement(dataElement.submitButtonSelector);
+  const inputList = Array.from(formElement.querySelectorAll(dataElement.inputSelector));
+  const buttonElement = formElement.querySelector(dataElement.submitButtonSelector);
   // Проверка состояния кнопки в самом начале
   toggleButtonState(inputList, buttonElement);
 
@@ -69,9 +69,9 @@ const hasInvalidInput = (inputList) => {
 };
 
 // Поиск и перебор всех форм на странице
-const enableValidation = (formElement) => {
+const enableValidation = () => {
   // Поиск всех форм в DOM и создание из них массива
-  const formList = Array.from(formElement.querySelectorAll(dataElement.formSelector));
+  const formList = Array.from(document.querySelectorAll(dataElement.formSelector));
   // Перебор полученной коллекции форм
   formList.forEach((formElement) => {
     formElement.addEventListener("submit", (e) => {
