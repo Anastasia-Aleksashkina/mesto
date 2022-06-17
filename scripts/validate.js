@@ -4,7 +4,7 @@ const dataElement = {
   submitButtonSelector: ".popup__button",
   inactiveButtonClass: "popup__button_disabled",
   inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible" //так как этот клас указан в разметке, нужно добавить точку?!
+  errorClass: "popup__error_visible"
 };
 
 // Показать ошибку ввода
@@ -44,9 +44,10 @@ const toggleButtonState = (inputList, dataElement) => {
   }
 };
 
-const setEventListeners = (formElement) => {
+// Принимает параметром элемент формы и добавляет полям нужные обработчики
+const setEventListeners = (formElement, dataElement) => {
   const inputList = Array.from(formElement.querySelectorAll(dataElement.inputSelector));
-  const buttonElement = formElement.querySelector(dataElement.submitButtonSelector);
+  const buttonElement = formElement.querySelectorAll(dataElement.submitButtonSelector);
   // Проверка состояния кнопки в самом начале
   toggleButtonState(inputList, buttonElement);
 
@@ -77,8 +78,8 @@ const enableValidation = () => {
     formElement.addEventListener("submit", (e) => {
       e.preventDefault();
     });
-  });
   setEventListeners(formElement);
+  });
 };
 
 enableValidation();
