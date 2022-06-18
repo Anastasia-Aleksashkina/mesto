@@ -37,7 +37,7 @@
           <h3 class="popup__title">Редактировать профиль</h3>
           <div class="popup__field">
             <input
-              id="name-input"
+              id="name"
               type="text"
               name="name"
               class="popup__input popup__input-name"
@@ -45,11 +45,11 @@
               minlength="2"
               maxlength="40"
             />
-            <span id="name-input-error" class="popup__error_visible"></span>
+            <span id="name-error" class="popup__error_visible"></span>
           </div>
           <div class="popup__field">
             <input
-              id="about-input"
+              id="about"
               type="text"
               name="about"
               class="popup__input popup__input-about"
@@ -57,7 +57,7 @@
               minlength="2"
               maxlength="200"
             />
-            <span id="about-input-error" class="popup__error_visible"></span>
+            <span id="about-error" class="popup__error_visible"></span>
           </div>
           <button type="submit" class="popup__button">Сохранить</button>
         </form>
@@ -70,7 +70,7 @@
           <h3 class="popup__title">Новое место</h3>
           <div class="popup__field">
             <input
-              id="name-input"
+              id="city"
               type="text"
               name="name"
               class="popup__input popup__input-city"
@@ -79,18 +79,18 @@
               minlength="2"
               maxlength="30"
             />
-            <span id="name-input-error" class="popup__error_visible"></span>
+            <span id="city-error" class="popup__error_visible"></span>
           </div>
           <div class="popup__field">
             <input
-              id="link-input"
+              id="link"
               type="url"
               name="link"
               class="popup__input popup__input-link"
               placeholder="Ссылка на картинку"
               required
             />
-            <span id="link-input-error" class="popup__error_visible"></span>
+            <span id="link-error" class="popup__error_visible"></span>
           </div>
           <button type="submit" class="popup__button">Создать</button>
         </form>
