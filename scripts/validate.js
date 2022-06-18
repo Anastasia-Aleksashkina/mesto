@@ -13,6 +13,7 @@ const showInputError = (formElement, inputElement, errorMessage, dataElement) =>
   inputElement.classList.add(dataElement.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(dataElement.errorClass);
+  console.log(inputElement);
 };
 
 // Скрыть ошибку ввода
@@ -21,6 +22,7 @@ const hideInputError = (formElement, inputElement, dataElement) => {
   inputElement.classList.remove(dataElement.inputErrorClass);
   errorElement.textContent = "";
   errorElement.classList.remove(dataElement.errorClass);
+  console.log(inputElement);
 };
 
 // Проверить валидность ввода
@@ -51,7 +53,7 @@ const setEventListeners = (formElement, dataElement) => {
   // Проверка состояния кнопки в самом начале
   toggleButtonState(inputList, buttonElement, dataElement);
 
-  inputList.forEach((inputElement, dataElement) => {
+  inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
       // Внутри колбэка вызываем функцию проверки валидности ввода, передавая форму и проверяемый элемент
       checkInputValidity(formElement, inputElement, dataElement);
