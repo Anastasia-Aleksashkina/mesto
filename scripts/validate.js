@@ -9,7 +9,7 @@ const dataElement = {
 
 // Показать ошибку ввода
 const showInputError = (formElement, inputElement, errorMessage, dataElement) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.add(dataElement.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(dataElement.errorClass);
@@ -17,7 +17,7 @@ const showInputError = (formElement, inputElement, errorMessage, dataElement) =>
 
 // Скрыть ошибку ввода
 const hideInputError = (formElement, inputElement, dataElement) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.remove(dataElement.inputErrorClass);
   errorElement.textContent = "";
   errorElement.classList.remove(dataElement.errorClass);
@@ -28,7 +28,7 @@ const checkInputValidity = (formElement, inputElement, dataElement) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, dataElement);
   } else {
-    hideInputError(formElement, inputList, dataElement);
+    hideInputError(formElement, inputElement, dataElement);
   }
 };
 
