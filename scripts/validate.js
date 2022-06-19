@@ -13,7 +13,6 @@ const showInputError = (formElement, inputElement, errorMessage, dataElement) =>
   inputElement.classList.add(dataElement.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(dataElement.errorClass);
-  console.log(inputElement);
 };
 
 // Скрыть ошибку ввода
@@ -22,7 +21,6 @@ const hideInputError = (formElement, inputElement, dataElement) => {
   inputElement.classList.remove(dataElement.inputErrorClass);
   errorElement.textContent = "";
   errorElement.classList.remove(dataElement.errorClass);
-  console.log(inputElement);
 };
 
 // Проверить валидность ввода
@@ -40,9 +38,11 @@ const toggleButtonState = (inputList, buttonElement, dataElement) => {
   if (hasInvalidInput(inputList, dataElement)) {
     // сделай кнопку неактивной
     buttonElement.classList.add(dataElement.inactiveButtonClass);
+    buttonElement.setAttribute("disabled", true);
   } else {
     // иначе сделай кнопку активной
     buttonElement.classList.remove(dataElement.inactiveButtonClass);
+    buttonElement.removeAttribute("disabled", true);
   }
 };
 
@@ -77,9 +77,6 @@ const enableValidation = (dataElement) => {
   const formList = Array.from(document.querySelectorAll(dataElement.formSelector));
   // Перебор полученной коллекции форм
   formList.forEach((formElement) => {
-    formElement.addEventListener("submit", (e) => {
-      e.preventDefault();
-    });
   setEventListeners(formElement, dataElement);
   });
 };

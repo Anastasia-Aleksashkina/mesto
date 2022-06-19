@@ -2,8 +2,8 @@ const popups = document.querySelectorAll(".popup");
 const popupUser = document.querySelector(".popup_profile");
 const popupCard = document.querySelector(".popup_new-card");
 const popupImage = document.querySelector(".popup_image");
-const editButtonUser = document.querySelector(".profile__button-edit");
-const editButtonCard = document.querySelector(".profile__button-edd");
+const profileButton = document.querySelector(".profile__button-edit");
+const сardButton = document.querySelector(".profile__button-edd");
 const nameElement = document.querySelector(".profile__user-name");
 const aboutElement = document.querySelector(".profile__user-about");
 const imageElement = document.querySelector(".element__image");
@@ -17,11 +17,12 @@ const cityFieldElement = formElementCard.querySelector(".popup__input-city");
 const linktFieldElement = formElementCard.querySelector(".popup__input-link");
 const imageFieldElement = document.querySelector(".popup__image-src");
 const captionFieldElement = document.querySelector(".popup__caption");
+const buttonElementSubmit = formElementCard.querySelector(".popup__button");
 
-const handlEscape= (e) => {
+const handlEscape = (e) => {
   if (e.key === "Escape") {
     closePopup(document.querySelector(".popup_opened"));
-  };
+  }
 };
 
 const openPopup = (popup) => {
@@ -30,27 +31,40 @@ const openPopup = (popup) => {
 };
 
 const closePopup = (popup) => {
+  const inputList = Array.from(
+    popup.querySelectorAll(dataElement.inputSelector)
+  );
+
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", handlEscape);
+  inputList.forEach((inputElement) => {
+    hideInputError(popup, inputElement, dataElement);
+  });
+  formElementCard.reset();
 };
 
 popups.forEach((popup) => {
   popup.addEventListener("mousedown", (e) => {
-    if (e.target.classList.contains("popup_opened")) {
-      closePopup(popup);
-    }
-    if (e.target.classList.contains("popup__button-close")) {
+    if (
+      e.target.classList.contains("popup_opened") ||
+      e.target.classList.contains("popup__button-close")
+    ) {
       closePopup(popup);
     }
   });
 });
 
 const getCardByElement = (e) => e.currentTarget.closest(".element");
+const deleteCard = (e) => {
+  const element = getCardByElement(e);
+  element.remove();
+};
 
 const createCard = (item) => {
   const cardTemplate = document.querySelector("#element-template").content;
   const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
   const cardImage = cardElement.querySelector(".element__image");
+
   cardElement.querySelector(".element__city").textContent = item.name;
   cardImage.src = item.link;
   cardImage.alt = item.name;
@@ -59,12 +73,8 @@ const createCard = (item) => {
   });
   cardElement
     .querySelector(".element__delete")
-    .addEventListener("click", (e) => {
-      const element = getCardByElement(e);
-      element.remove();
-    });
+    .addEventListener("click", deleteCard);
   cardImage.addEventListener("click", () => {
-    openPopup(popupImage);
     openImagePopup(item);
   });
 
@@ -82,6 +92,7 @@ const openImagePopup = (element) => {
   imageFieldElement.src = element.link;
   imageFieldElement.alt = element.name;
   captionFieldElement.textContent = element.name;
+  openPopup(popupImage);
 };
 
 const handlerProfileSubmit = (e) => {
@@ -98,15 +109,17 @@ const handlerCardSubmit = (e) => {
     link: linktFieldElement.value,
   };
   addCard(card);
-  closePopup(popupCard);
   formElementCard.reset();
+  closePopup(popupCard);
+  buttonElementSubmit.classList.add("popup__button_disabled");
+  buttonElementSubmit.setAttribute("disabled", true);
 };
 
-editButtonUser.addEventListener("click", () => {
+profileButton.addEventListener("click", () => {
   openPopup(popupUser);
   nameFieldElement.value = nameElement.textContent;
   aboutFieldElement.value = aboutElement.textContent;
 });
-editButtonCard.addEventListener("click", () => openPopup(popupCard));
+сardButton.addEventListener("click", () => openPopup(popupCard));
 formElementUser.addEventListener("submit", handlerProfileSubmit);
 formElementCard.addEventListener("submit", handlerCardSubmit);
