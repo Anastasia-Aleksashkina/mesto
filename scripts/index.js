@@ -28,7 +28,6 @@ const handlEscape = (e) => {
 const openPopup = (popup) => {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", handlEscape);
-  resetPopup(popup);
 };
 
 const closePopup = (popup) => {

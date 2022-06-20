@@ -56,17 +56,6 @@ const toggleButtonState = (inputList, buttonElement, dataElement) => {
   }
 };
 
-// Очистка ошибок в форме
-const resetPopup = (popup) => {
-  const inputList = Array.from(
-    popup.querySelectorAll(dataElement.inputSelector)
-  );
-  inputList.forEach((inputElement) => {
-    hideInputError(popup, inputElement, dataElement);
-  });
-  formElementCard.reset();
-};
-
 // Принимает параметром элемент формы и добавляет полям нужные обработчики
 const setEventListeners = (formElement, dataElement) => {
   const inputList = Array.from(
