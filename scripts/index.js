@@ -28,19 +28,12 @@ const handlEscape = (e) => {
 const openPopup = (popup) => {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", handlEscape);
+  resetPopup(popup);
 };
 
 const closePopup = (popup) => {
-  const inputList = Array.from(
-    popup.querySelectorAll(dataElement.inputSelector)
-  );
-
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", handlEscape);
-  inputList.forEach((inputElement) => {
-    hideInputError(popup, inputElement, dataElement);
-  });
-  formElementCard.reset();
 };
 
 popups.forEach((popup) => {

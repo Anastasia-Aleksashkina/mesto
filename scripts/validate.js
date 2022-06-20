@@ -4,11 +4,16 @@ const dataElement = {
   submitButtonSelector: ".popup__button",
   inactiveButtonClass: "popup__button_disabled",
   inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error-visible"
+  errorClass: "popup__error-visible",
 };
 
 // Показать ошибку ввода
-const showInputError = (formElement, inputElement, errorMessage, dataElement) => {
+const showInputError = (
+  formElement,
+  inputElement,
+  errorMessage,
+  dataElement
+) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.add(dataElement.inputErrorClass);
   errorElement.textContent = errorMessage;
@@ -26,7 +31,12 @@ const hideInputError = (formElement, inputElement, dataElement) => {
 // Проверить валидность ввода
 const checkInputValidity = (formElement, inputElement, dataElement) => {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage, dataElement);
+    showInputError(
+      formElement,
+      inputElement,
+      inputElement.validationMessage,
+      dataElement
+    );
   } else {
     hideInputError(formElement, inputElement, dataElement);
   }
@@ -46,10 +56,25 @@ const toggleButtonState = (inputList, buttonElement, dataElement) => {
   }
 };
 
+// Очистка ошибок в форме
+const resetPopup = (popup) => {
+  const inputList = Array.from(
+    popup.querySelectorAll(dataElement.inputSelector)
+  );
+  inputList.forEach((inputElement) => {
+    hideInputError(popup, inputElement, dataElement);
+  });
+  formElementCard.reset();
+};
+
 // Принимает параметром элемент формы и добавляет полям нужные обработчики
 const setEventListeners = (formElement, dataElement) => {
-  const inputList = Array.from(formElement.querySelectorAll(dataElement.inputSelector));
-  const buttonElement = formElement.querySelector(dataElement.submitButtonSelector);
+  const inputList = Array.from(
+    formElement.querySelectorAll(dataElement.inputSelector)
+  );
+  const buttonElement = formElement.querySelector(
+    dataElement.submitButtonSelector
+  );
   // Проверка состояния кнопки в самом начале
   toggleButtonState(inputList, buttonElement, dataElement);
 
@@ -74,10 +99,12 @@ const hasInvalidInput = (inputList) => {
 // Поиск и перебор всех форм на странице
 const enableValidation = (dataElement) => {
   // Поиск всех форм в DOM и создание из них массива
-  const formList = Array.from(document.querySelectorAll(dataElement.formSelector));
+  const formList = Array.from(
+    document.querySelectorAll(dataElement.formSelector)
+  );
   // Перебор полученной коллекции форм
   formList.forEach((formElement) => {
-  setEventListeners(formElement, dataElement);
+    setEventListeners(formElement, dataElement);
   });
 };
 
