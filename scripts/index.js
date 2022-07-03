@@ -1,3 +1,6 @@
+import { Card } from "./Card.js";
+import { initialCards } from "./cards.js";
+
 const popups = document.querySelectorAll(".popup");
 const popupUser = document.querySelector(".popup_profile");
 const popupCard = document.querySelector(".popup_new-card");
@@ -6,8 +9,6 @@ const profileButton = document.querySelector(".profile__button-edit");
 const сardButton = document.querySelector(".profile__button-edd");
 const nameElement = document.querySelector(".profile__user-name");
 const aboutElement = document.querySelector(".profile__user-about");
-const imageElement = document.querySelector(".element__image");
-const cityElement = document.querySelector(".element__city");
 const cardContainer = document.querySelector(".elements");
 const formElementUser = document.querySelector(".popup__form");
 const formElementCard = document.querySelector(".popup__form_new-card");
@@ -15,8 +16,6 @@ const nameFieldElement = formElementUser.querySelector(".popup__input-name");
 const aboutFieldElement = formElementUser.querySelector(".popup__input-about");
 const cityFieldElement = formElementCard.querySelector(".popup__input-city");
 const linktFieldElement = formElementCard.querySelector(".popup__input-link");
-const imageFieldElement = document.querySelector(".popup__image-src");
-const captionFieldElement = document.querySelector(".popup__caption");
 const buttonElementSubmit = formElementCard.querySelector(".popup__button");
 
 const handlEscape = (e) => {
@@ -25,7 +24,7 @@ const handlEscape = (e) => {
   }
 };
 
-const openPopup = (popup) => {
+export const openPopup = (popup) => {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", handlEscape);
 };
@@ -46,32 +45,11 @@ popups.forEach((popup) => {
   });
 });
 
-const getCardByElement = (e) => e.currentTarget.closest(".element");
-const deleteCard = (e) => {
-  const element = getCardByElement(e);
-  element.remove();
-};
-
-const createCard = (item) => {
-  const cardTemplate = document.querySelector("#element-template").content;
-  const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
-  const cardImage = cardElement.querySelector(".element__image");
-
-  cardElement.querySelector(".element__city").textContent = item.name;
-  cardImage.src = item.link;
-  cardImage.alt = item.name;
-  cardElement.querySelector(".element__like").addEventListener("click", (e) => {
-    e.target.classList.toggle("element__like_active");
-  });
-  cardElement
-    .querySelector(".element__delete")
-    .addEventListener("click", deleteCard);
-  cardImage.addEventListener("click", () => {
-    openImagePopup(item);
-  });
-
+const createCard = (data) => {
+  const card = new Card(data);
+  const cardElement = card.generateCard();
   return cardElement;
-};
+}
 
 const addCard = (element) => {
   const cardElement = createCard(element);
@@ -79,13 +57,6 @@ const addCard = (element) => {
 };
 
 initialCards.forEach(addCard);
-
-const openImagePopup = (element) => {
-  imageFieldElement.src = element.link;
-  imageFieldElement.alt = element.name;
-  captionFieldElement.textContent = element.name;
-  openPopup(popupImage);
-};
 
 const handlerProfileSubmit = (e) => {
   e.preventDefault();
