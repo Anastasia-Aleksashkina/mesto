@@ -1,10 +1,10 @@
-import { Card } from "./Card.js";
+import Card from "./Card.js";
 import { initialCards } from "./cards.js";
+import FormValidator from "./FormValidator.js";
 
 const popups = document.querySelectorAll(".popup");
 const popupUser = document.querySelector(".popup_profile");
 const popupCard = document.querySelector(".popup_new-card");
-const popupImage = document.querySelector(".popup_image");
 const profileButton = document.querySelector(".profile__button-edit");
 const сardButton = document.querySelector(".profile__button-edd");
 const nameElement = document.querySelector(".profile__user-name");
@@ -17,6 +17,20 @@ const aboutFieldElement = formElementUser.querySelector(".popup__input-about");
 const cityFieldElement = formElementCard.querySelector(".popup__input-city");
 const linktFieldElement = formElementCard.querySelector(".popup__input-link");
 const buttonElementSubmit = formElementCard.querySelector(".popup__button");
+
+export const dataElement = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error-visible",
+};
+
+const userFormValidation = new FormValidator(formElementUser, dataElement);
+const addFormValidation = new FormValidator(formElementCard, dataElement);
+userFormValidation.enableValidation();
+addFormValidation.enableValidation();
 
 const handlEscape = (e) => {
   if (e.key === "Escape") {
@@ -45,6 +59,13 @@ popups.forEach((popup) => {
   });
 });
 
+const handlerProfileSubmit = (e) => {
+  e.preventDefault();
+  nameElement.textContent = nameFieldElement.value;
+  aboutElement.textContent = aboutFieldElement.value;
+  closePopup(popupUser);
+};
+
 const createCard = (data) => {
   const card = new Card(data);
   const cardElement = card.generateCard();
@@ -57,13 +78,6 @@ const addCard = (element) => {
 };
 
 initialCards.forEach(addCard);
-
-const handlerProfileSubmit = (e) => {
-  e.preventDefault();
-  nameElement.textContent = nameFieldElement.value;
-  aboutElement.textContent = aboutFieldElement.value;
-  closePopup(popupUser);
-};
 
 const handlerCardSubmit = (e) => {
   e.preventDefault();

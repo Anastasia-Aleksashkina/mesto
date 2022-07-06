@@ -1,6 +1,6 @@
 import { openPopup } from "./index.js";
 
-export class Card {
+export default class Card {
   constructor(data) {
     // передаем конструктору параметры
     this._name = data.name;
@@ -29,7 +29,7 @@ export class Card {
     return this._element;
   }
 
-  // добавляем метод для установки слушателей событий
+  // метод для установки слушателей событий
   _setEventListeners() {
     this._element
       .querySelector(".element__like")
@@ -50,19 +50,19 @@ export class Card {
       });
   }
 
-  // добавляем метод для изменения класса лайка
+  // метод для изменения класса лайка
   _handleLikeClick() {
     this._element
       .querySelector(".element__like")
       .classList.toggle("element__like_active");
   }
 
-  // добавляем метод для удаления карточки
+  // метод для удаления карточки
   _handleDeleteClick() {
     this._element.remove();
   }
 
-  // добавляем метод открытия карточки
+  // метод открытия карточки
   _openImageClick() {
     const popupImage = document.querySelector(".popup_image");
     const imageElement = document.querySelector(".popup__image-src");
