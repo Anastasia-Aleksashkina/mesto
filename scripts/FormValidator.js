@@ -50,15 +50,13 @@ export default class FormValidator {
   // метод переключения состояния кнопки
   _toggleButtonState() {
     // Если есть хотя бы один невалидный инпут
-    if (this._validateInput) {
+    if (this._validateInput()) {
       // сделай кнопку неактивной
       this._buttonElement.classList.add(this._dataElement.inactiveButtonClass);
-      // this._buttonElement.setAttribute("disabled", true);
       this._buttonElement.disabled = true;
     } else {
       // иначе сделай кнопку активной
       this._buttonElement.classList.remove(this._dataElement.inactiveButtonClass);
-      // this._buttonElement.removeAttribute("disabled", true);
       this._buttonElement.disabled = false;
     }
   }

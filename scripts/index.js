@@ -18,7 +18,7 @@ const cityFieldElement = formElementCard.querySelector(".popup__input-city");
 const linktFieldElement = formElementCard.querySelector(".popup__input-link");
 const buttonElementSubmit = formElementCard.querySelector(".popup__button");
 
-export const dataElement = {
+const dataElement = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
@@ -59,13 +59,6 @@ popups.forEach((popup) => {
   });
 });
 
-const handlerProfileSubmit = (e) => {
-  e.preventDefault();
-  nameElement.textContent = nameFieldElement.value;
-  aboutElement.textContent = aboutFieldElement.value;
-  closePopup(popupUser);
-};
-
 const createCard = (data) => {
   const card = new Card(data);
   const cardElement = card.generateCard();
@@ -78,6 +71,13 @@ const addCard = (element) => {
 };
 
 initialCards.forEach(addCard);
+
+const handlerProfileSubmit = (e) => {
+  e.preventDefault();
+  nameElement.textContent = nameFieldElement.value;
+  aboutElement.textContent = aboutFieldElement.value;
+  closePopup(popupUser);
+};
 
 const handlerCardSubmit = (e) => {
   e.preventDefault();
