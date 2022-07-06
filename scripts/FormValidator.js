@@ -3,7 +3,7 @@ export default class FormValidator {
     this._formElement = formElement;
     this._dataElement = dataElement;
     this._inputList = Array.from(
-      formElement.querySelectorAll(this._inputSelector)
+      formElement.querySelectorAll(this._dataElement.inputSelector)
     );
     this._buttonElement = this._formElement.querySelector(
       this._dataElement.submitButtonSelector
@@ -12,7 +12,7 @@ export default class FormValidator {
 
   // метод для отображения ошибки ввода
   _showInputError(inputElement, errorMessage) {
-    const errorElement = this._formSelector.querySelector(
+    const errorElement = this._formElement.querySelector(
       `#${inputElement.id}-error`
     );
     inputElement.classList.add(this._dataElement.inputErrorClass);
@@ -22,7 +22,7 @@ export default class FormValidator {
 
   // метод для скрытия ошибки ввода
   _hideInputError(inputElement) {
-    const errorElement = this._formSelector.querySelector(
+    const errorElement = this._formElement.querySelector(
       `#${inputElement.id}-error`
     );
     inputElement.classList.remove(this._dataElement.inputErrorClass);
@@ -53,17 +53,19 @@ export default class FormValidator {
     if (this._validateInput) {
       // сделай кнопку неактивной
       this._buttonElement.classList.add(this._dataElement.inactiveButtonClass);
-      this._buttonElement.setAttribute("disabled", true);
+      // this._buttonElement.setAttribute("disabled", true);
+      this._buttonElement.disabled = true;
     } else {
       // иначе сделай кнопку активной
       this._buttonElement.classList.remove(this._dataElement.inactiveButtonClass);
-      this._buttonElement.removeAttribute("disabled", true);
+      // this._buttonElement.removeAttribute("disabled", true);
+      this._buttonElement.disabled = false;
     }
   }
 
   // метод принимает параметром элемент формы и добавляет полям нужные обработчики
   _setEventListeners() {
-    // Проверка состояния кнопки в самом начале
+    // // Проверка состояния кнопки в самом начале
     this._toggleButtonState();
 
     this._inputList.forEach((inputElement) => {

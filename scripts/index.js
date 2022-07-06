@@ -89,7 +89,7 @@ const handlerCardSubmit = (e) => {
   formElementCard.reset();
   closePopup(popupCard);
   buttonElementSubmit.classList.add("popup__button_disabled");
-  buttonElementSubmit.setAttribute("disabled", true);
+  buttonElementSubmit.disabled = true;
 };
 
 profileButton.addEventListener("click", () => {
