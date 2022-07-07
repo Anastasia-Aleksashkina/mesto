@@ -96,8 +96,8 @@ profileButton.addEventListener("click", () => {
   openPopup(popupUser);
   nameFieldElement.value = nameElement.textContent;
   aboutFieldElement.value = aboutElement.textContent;
-  userFormValidation.disabledButton();
   userFormValidation.resetValidation();
+  userFormValidation.disabledButton();
 });
 
 сardButton.addEventListener("click", () => {

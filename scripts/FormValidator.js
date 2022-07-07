@@ -86,7 +86,7 @@ export default class FormValidator {
   }
 
   disabledButton() {
-    this._buttonElement.classList.add(this._selectorsNames.inactiveButtonClass);
+    this._buttonElement.classList.add(this._dataElement.inactiveButtonClass);
     this._buttonElement.disabled = true;
   }
 
