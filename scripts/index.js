@@ -5,6 +5,9 @@ import FormValidator from "./FormValidator.js";
 const popups = document.querySelectorAll(".popup");
 const popupUser = document.querySelector(".popup_profile");
 const popupCard = document.querySelector(".popup_new-card");
+export const popupImage = document.querySelector(".popup_image");
+export const imageElement = document.querySelector(".popup__image-src");
+export const captionElement = document.querySelector(".popup__caption");
 const profileButton = document.querySelector(".profile__button-edit");
 const сardButton = document.querySelector(".profile__button-edd");
 const nameElement = document.querySelector(".profile__user-name");
@@ -16,7 +19,6 @@ const nameFieldElement = formElementUser.querySelector(".popup__input-name");
 const aboutFieldElement = formElementUser.querySelector(".popup__input-about");
 const cityFieldElement = formElementCard.querySelector(".popup__input-city");
 const linktFieldElement = formElementCard.querySelector(".popup__input-link");
-const buttonElementSubmit = formElementCard.querySelector(".popup__button");
 
 const dataElement = {
   formSelector: ".popup__form",
@@ -86,17 +88,23 @@ const handlerCardSubmit = (e) => {
     link: linktFieldElement.value,
   };
   addCard(card);
-  formElementCard.reset();
   closePopup(popupCard);
-  buttonElementSubmit.classList.add("popup__button_disabled");
-  buttonElementSubmit.disabled = true;
+  formElementCard.reset();
 };
 
 profileButton.addEventListener("click", () => {
   openPopup(popupUser);
   nameFieldElement.value = nameElement.textContent;
   aboutFieldElement.value = aboutElement.textContent;
+  userFormValidation.disabledButton();
+  userFormValidation.resetValidation();
 });
-сardButton.addEventListener("click", () => openPopup(popupCard));
+
+сardButton.addEventListener("click", () => {
+  openPopup(popupCard);
+  cityFieldElement.value = "";
+  linktFieldElement.value = "";
+  addFormValidation.resetValidation();
+});
 formElementUser.addEventListener("submit", handlerProfileSubmit);
 formElementCard.addEventListener("submit", handlerCardSubmit);

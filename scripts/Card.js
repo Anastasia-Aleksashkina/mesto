@@ -1,4 +1,4 @@
-import { openPopup } from "./index.js";
+import { openPopup, popupImage, imageElement, captionElement } from "./index.js";
 
 export default class Card {
   constructor(data) {
@@ -20,11 +20,12 @@ export default class Card {
   // забираем name и link из массива и готовим карточку к публикации
   generateCard() {
     this._element = this._getTemplate();
+    this._imageElement = this._element.querySelector(".element__image");
     this._setEventListeners(); // добавляем обработчики
 
-    this._element.querySelector(".element__image").src = this._link;
+    this._imageElement.src = this._link;
+    this._imageElement.alt = this._name;
     this._element.querySelector(".element__city").textContent = this._name;
-    this._element.querySelector(".element__city").alt = this._name;
 
     return this._element;
   }
@@ -60,13 +61,11 @@ export default class Card {
   // метод для удаления карточки
   _handleDeleteClick() {
     this._element.remove();
+    this._element = null;
   }
 
   // метод открытия карточки
   _openImageClick() {
-    const popupImage = document.querySelector(".popup_image");
-    const imageElement = document.querySelector(".popup__image-src");
-    const captionElement = document.querySelector(".popup__caption");
     imageElement.src = this._link;
     imageElement.alt = this._name;
     captionElement.textContent = this._name;

@@ -76,6 +76,20 @@ export default class FormValidator {
     });
   }
 
+  // метод очищает ошибки и блокирует кнопку
+  resetValidation() {
+    this._toggleButtonState();
+
+    this._inputList.forEach((inputElement) => {
+       this._hideInputError(inputElement);
+    })
+  }
+
+  disabledButton() {
+    this._buttonElement.classList.add(this._selectorsNames.inactiveButtonClass);
+    this._buttonElement.disabled = true;
+  }
+
   enableValidation() {
     this._setEventListeners();
   }
