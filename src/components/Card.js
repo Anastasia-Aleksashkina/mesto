@@ -1,15 +1,16 @@
 export default class Card {
-  constructor(data, openImage) {
+  constructor(data, selector, openImage) {
     // передаем конструктору параметры
     this._name = data.name;
     this._link = data.link;
+    this._selector = selector;
     this._openImage = openImage;
   }
 
   // забираем разметку карточки из HTML, клонируем элемент и возвращаем элемент карточки
   _getTemplate() {
     const cardTemplate = document
-      .querySelector("#element-template")
+      .querySelector(this._selector)
       .content.querySelector(".element")
       .cloneNode(true);
 
@@ -47,7 +48,6 @@ export default class Card {
       .querySelector(".element__image")
       .addEventListener("click", () => {
         this._openImage(this._name, this._link);
-        console.log(this._openImage);
       });
   }
 

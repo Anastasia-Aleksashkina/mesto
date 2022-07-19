@@ -22,11 +22,12 @@ import {
   initialCards,
 } from "../utils/constants.js";
 
-// const createCard = (item) => {
-//   const card = new Card(item, ".elements");
+// const createCard = (data) => {
+//   const card = new Card(data, ".elements", openImage);
 //   const cardElement = card.generateCard();
 //   return cardElement;
 // };
+
 const openImage = (name, link) => {
   imagePopup.open(name, link);
 };
@@ -34,18 +35,18 @@ const openImage = (name, link) => {
 const imagePopup = new PopupWithImage(popupImage);
 imagePopup.setEventListeners();
 
-const CardList = new Section(
+const cardList = new Section(
   {
     items: initialCards,
-    renderer: (item) => {
-      const card = new Card(item, ".elements", openImage);
+    renderer: (data) => {
+      const card = new Card(data, "#element-template", openImage);
       const cardElement = card.generateCard();
-      CardList.addItem(cardElement);
+      cardList.addItem(cardElement);
     },
   },
   cardListSelector
 );
-CardList.renderItem();
+cardList.renderItem();
 
 const userFormValidation = new FormValidator(formElementUser, dataElement);
 const addFormValidation = new FormValidator(formElementCard, dataElement);
