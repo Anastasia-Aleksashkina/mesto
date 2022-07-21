@@ -2,8 +2,9 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 import {
-  // popups,
   popupUser,
   popupCard,
   popupImage,
@@ -21,12 +22,6 @@ import {
   dataElement,
   initialCards,
 } from "../utils/constants.js";
-
-// const createCard = (data) => {
-//   const card = new Card(data, ".elements", openImage);
-//   const cardElement = card.generateCard();
-//   return cardElement;
-// };
 
 const openImage = (name, link) => {
   imagePopup.open(name, link);
@@ -53,71 +48,39 @@ const addFormValidation = new FormValidator(formElementCard, dataElement);
 userFormValidation.enableValidation();
 addFormValidation.enableValidation();
 
-// const handlEscape = (e) => {
-//   if (e.key === "Escape") {
-//     closePopup(document.querySelector(".popup_opened"));
-//   }
-// };
+const profileInfo = new UserInfo({
+  name: nameElement,
+  about: aboutElement,
+})
 
-// export const openPopup = (popup) => {
-//   popup.classList.add("popup_opened");
-//   document.addEventListener("keydown", handlEscape);
-// };
-
-// const closePopup = (popup) => {
-//   popup.classList.remove("popup_opened");
-//   document.removeEventListener("keydown", handlEscape);
-// };
-
-// popups.forEach((popup) => {
-//   popup.addEventListener("mousedown", (e) => {
-//     if (
-//       e.target.classList.contains("popup_opened") ||
-//       e.target.classList.contains("popup__button-close")
-//     ) {
-//       closePopup(popup);
-//     }
-//   });
-// });
-
-// const addCard = (element) => {
-//   const cardElement = createCard(element);
-//   cardContainer.prepend(cardElement);
-// };
-
-// initialCards.forEach(addCard);
-
-const handlerProfileSubmit = (e) => {
-  e.preventDefault();
-  nameElement.textContent = nameFieldElement.value;
-  aboutElement.textContent = aboutFieldElement.value;
-  closePopup(popupUser);
+const handlerProfileSubmit = (data) => {
+  profileInfo.setUserInfo(data);
 };
 
-const handlerCardSubmit = (e) => {
-  e.preventDefault();
-  const card = {
-    name: cityFieldElement.value,
-    link: linktFieldElement.value,
-  };
-  CardList.addItem(card);
-  closePopup(popupCard);
-  formElementCard.reset();
-};
+const profilePopup = new PopupWithForm(popupUser, handlerProfileSubmit);
+profilePopup.setEventListeners();
 
 profileButton.addEventListener("click", () => {
-  openPopup(popupUser);
+  profilePopup.open();
   nameFieldElement.value = nameElement.textContent;
   aboutFieldElement.value = aboutElement.textContent;
   userFormValidation.resetValidation();
   userFormValidation.disabledButton();
 });
 
+const handlerCardSubmit = (data) => {
+  const card = new Card(data, "#element-template");
+  const cardElement = card.generateCard();
+  cardList.addItem(cardElement);
+  newCardPopup.close();
+};
+
+const newCardPopup = new PopupWithForm(popupCard, handlerCardSubmit);
+newCardPopup.setEventListeners();
+
 сardButton.addEventListener("click", () => {
-  // openPopup(popupCard);
+  newCardPopup.open();
   cityFieldElement.value = "";
   linktFieldElement.value = "";
   addFormValidation.resetValidation();
 });
-formElementUser.addEventListener("submit", handlerProfileSubmit);
-formElementCard.addEventListener("submit", handlerCardSubmit);

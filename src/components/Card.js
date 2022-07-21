@@ -63,12 +63,4 @@ export default class Card {
     this._element.remove();
     this._element = null;
   }
-
-  // // метод открытия карточки
-  // _openImageClick() {
-  //   imageElement.src = this._link;
-  //   imageElement.alt = this._name;
-  //   captionElement.textContent = this._name;
-  //   return openPopup(popupImage);
-  // }
 }
