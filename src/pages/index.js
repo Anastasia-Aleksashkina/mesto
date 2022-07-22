@@ -22,8 +22,8 @@ import {
   initialCards,
 } from "../utils/constants.js";
 
-const openImage = (e) => {
-  imagePopup.open(e.target);
+const openImage = (name, link) => {
+  imagePopup.open(name, link);
 };
 
 const imagePopup = new PopupWithImage(popupImage);
