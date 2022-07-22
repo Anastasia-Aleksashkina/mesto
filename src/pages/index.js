@@ -1,3 +1,4 @@
+import "./../pages/index.css";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
@@ -62,8 +63,9 @@ profilePopup.setEventListeners();
 
 profileButton.addEventListener("click", () => {
   profilePopup.open();
-  nameFieldElement.value = nameElement.textContent;
-  aboutFieldElement.value = aboutElement.textContent;
+  const profileInfoValues = profileInfo.getUserInfo();
+  nameFieldElement.value = profileInfoValues.name;
+  aboutFieldElement.value = profileInfoValues.about;
   userFormValidation.resetValidation();
   userFormValidation.disabledButton();
 });
