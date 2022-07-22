@@ -18,25 +18,28 @@ import {
   formElementCard,
   nameFieldElement,
   aboutFieldElement,
-  cityFieldElement,
-  linktFieldElement,
   dataElement,
   initialCards,
 } from "../utils/constants.js";
 
-const openImage = (name, link) => {
-  imagePopup.open(name, link);
+const openImage = (e) => {
+  imagePopup.open(e.target);
 };
 
 const imagePopup = new PopupWithImage(popupImage);
 imagePopup.setEventListeners();
 
+const createCard = (data) => {
+  const card = new Card(data, "#element-template", openImage);
+  const cardElement = card.generateCard();
+  return cardElement;
+}
+
 const cardList = new Section(
   {
     items: initialCards,
-    renderer: (data) => {
-      const card = new Card(data, "#element-template", openImage);
-      const cardElement = card.generateCard();
+    renderer: (item) => {
+      const cardElement = createCard(item);
       cardList.addItem(cardElement);
     },
   },
@@ -71,8 +74,7 @@ profileButton.addEventListener("click", () => {
 });
 
 const handlerCardSubmit = (data) => {
-  const card = new Card(data, "#element-template");
-  const cardElement = card.generateCard();
+  const cardElement = createCard(data);
   cardList.addItem(cardElement);
   newCardPopup.close();
 };
@@ -82,7 +84,5 @@ newCardPopup.setEventListeners();
 
 сardButton.addEventListener("click", () => {
   newCardPopup.open();
-  cityFieldElement.value = "";
-  linktFieldElement.value = "";
   addFormValidation.resetValidation();
 });

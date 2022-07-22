@@ -11,8 +11,6 @@ export const formElementUser = document.querySelector(".popup__form");
 export const formElementCard = document.querySelector(".popup__form_new-card");
 export const nameFieldElement = formElementUser.querySelector(".popup__input-name");
 export const aboutFieldElement = formElementUser.querySelector(".popup__input-about");
-export const cityFieldElement = formElementCard.querySelector(".popup__input-city");
-export const linktFieldElement = formElementCard.querySelector(".popup__input-link");
 
 export const dataElement = {
   formSelector: ".popup__form",
