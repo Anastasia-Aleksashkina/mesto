@@ -11,8 +11,6 @@ import {
   popupImage,
   profileButton,
   сardButton,
-  nameElement,
-  aboutElement,
   cardListSelector,
   formElementUser,
   formElementCard,
@@ -53,8 +51,8 @@ userFormValidation.enableValidation();
 addFormValidation.enableValidation();
 
 const profileInfo = new UserInfo({
-  name: nameElement,
-  about: aboutElement,
+  nameSelector: ".profile__user-name",
+  aboutSelector: ".profile__user-about",
 })
 
 const handlerProfileSubmit = (data) => {
