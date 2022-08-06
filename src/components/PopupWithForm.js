@@ -1,19 +1,28 @@
 import Popup from "../components/Popup.js";
 
 export default class PopupWithForm extends Popup {
-  constructor(popupSelector, submitForm) {
+  constructor(popupSelector, { submitForm }) {
     super(popupSelector);
+    this._submitForm = submitForm;
     this._form = this._popup.querySelector(".popup__form");
     this._inputs = this._form.querySelectorAll(".popup__input");
-    this._submitForm = submitForm;
+    this._submitButton = this._popup.querySelector(".popup__button");
+    this._submitButtonContent = this._submitButton.textContent;
   }
 
   _getInputValues() {
     const values = {};
-    this._inputs.forEach(element => {
+    this._inputs.forEach((element) => {
       values[element.name] = element.value;
     });
     return values;
+  }
+
+  setInputValues(data) {
+    this._inputs.forEach((item) => {
+      item.value = data[item.id];
+      console.log(item);
+    });
   }
 
   setEventListeners() {
@@ -25,9 +34,21 @@ export default class PopupWithForm extends Popup {
     });
   }
 
+  // Визуализация индикатора сохранения формы (UX)
+  renderLoadingView(loading, text) {
+    if (loading) {
+      this._submitButton.disabled = true;
+      this._submitButton.textContent = text;
+    } else {
+      setTimeout(() => {
+        this._submitButton.disabled = true;
+        this._submitButton.textContent = this._submitButtonContent;
+      }, 3000);
+    }
+  }
+
   close() {
     super.close();
     this._form.reset();
   }
-
 }

@@ -1,16 +1,19 @@
 export default class Card {
-  constructor(data, selector, openImage) {
+  constructor(cardObj, cardSelector, openImage, deleteCard) {
     // передаем конструктору параметры
-    this._name = data.name;
-    this._link = data.link;
-    this._selector = selector;
+    this._cardObj = cardObj;
+    this._name = cardObj.name;
+    this._link = cardObj.link;
+    this._id = cardObj.id;
+    this._cardSelector = cardSelector;
     this._openImage = openImage;
+    this._deleteCard = deleteCard;
   }
 
   // забираем разметку карточки из HTML, клонируем элемент и возвращаем элемент карточки
   _getTemplate() {
     const cardTemplate = document
-      .querySelector(this._selector)
+      .querySelector(this._cardSelector)
       .content.querySelector(".element")
       .cloneNode(true);
 
@@ -41,7 +44,7 @@ export default class Card {
     this._element
       .querySelector(".element__delete")
       .addEventListener("click", () => {
-        this._handleDeleteClick();
+        this._deleteCard(this._id);
       });
 
     this._element
@@ -59,7 +62,7 @@ export default class Card {
   }
 
   // метод для удаления карточки
-  _handleDeleteClick() {
+  delete() {
     this._element.remove();
     this._element = null;
   }

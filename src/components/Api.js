@@ -13,28 +13,60 @@ export default class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  // Загрузка карточек с сервера
+  // Получение данных профиля с сервера
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    }).then(this._getJsonOrError);
+  }
+
+  // Получение карточек с сервера
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     }).then(this._getJsonOrError);
   }
 
-  // Добавление новой карточки на сервер
+  // Отправка на сервер новой карточки
   addCard(data) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify({ name: data.name, link: data.link }),
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link,
+      }),
     }).then(this._getJsonOrError);
   }
 
-  // Редактирование аватара
+  // Обновление данных профиля на сервере
+  changeProfile(data) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about,
+      }),
+    }).then(this._getJsonOrError);
+  }
+
+  // Обновление аватара на сервере
   changeAvatar(data) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({ avatar: data.avatar }),
+      body: JSON.stringify({
+        avatar: data.avatar,
+      }),
     }).then(this._getJsonOrError);
   }
+
+  // Удаление карточки на сервере
+  deleteCard(id) {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
+        method: "DELETE",
+        headers: this._headers,
+    }).then(this._getJsonOrError);
+}
 }
