@@ -12,7 +12,7 @@ export const formElementUser = document.querySelector(".popup__form");
 export const formElementCard = document.querySelector(".popup__form_new-card");
 export const formElementAvatar = document.querySelector(".popup__form_avatar");
 
-export const dataElement = {
+export const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",

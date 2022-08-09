@@ -16,8 +16,10 @@ export default class UserInfo {
 
   // Изменение информации о пользователе
   setUserInfo(data) {
-    this._name.textContent = data.name;
-    this._about.textContent = data.about;
-    this._avatar.src = data.avatar;
+    if ((data.name, data.about, data.avatar)) {
+      this._name.textContent = data.name;
+      this._about.textContent = data.about;
+      this._avatar.src = data.avatar;
+    }
   }
 }

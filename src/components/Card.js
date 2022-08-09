@@ -43,6 +43,7 @@ export default class Card {
       console.log(this._ownerId);
     }
     this.likesCounter(this._likes);
+    this._activeLike();
     this._setEventListeners();
     return this._element;
   }
@@ -86,5 +87,13 @@ export default class Card {
     } else {
       this._likeCounter.textContent = likes.length;
     }
+  }
+
+  _activeLike() {
+    this._likes.forEach((like) => {
+      if (this._id === like._id) {
+        this._likeButton.classList.add('element__like_active');
+      }
+    });
   }
 }

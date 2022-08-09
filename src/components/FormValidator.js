@@ -1,12 +1,12 @@
 export default class FormValidator {
-  constructor(formElement, dataElement) {
+  constructor(formElement, validationConfig) {
     this._formElement = formElement;
-    this._dataElement = dataElement;
+    this._validationConfig = validationConfig;
     this._inputList = Array.from(
-      formElement.querySelectorAll(this._dataElement.inputSelector)
+      formElement.querySelectorAll(this._validationConfig.inputSelector)
     );
     this._buttonElement = this._formElement.querySelector(
-      this._dataElement.submitButtonSelector
+      this._validationConfig.submitButtonSelector
     );
   }
 
@@ -15,9 +15,9 @@ export default class FormValidator {
     const errorElement = this._formElement.querySelector(
       `#${inputElement.id}-error`
     );
-    inputElement.classList.add(this._dataElement.inputErrorClass);
+    inputElement.classList.add(this._validationConfig.inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add(this._dataElement.errorClass);
+    errorElement.classList.add(this._validationConfig.errorClass);
   }
 
   // метод для скрытия ошибки ввода
@@ -25,9 +25,9 @@ export default class FormValidator {
     const errorElement = this._formElement.querySelector(
       `#${inputElement.id}-error`
     );
-    inputElement.classList.remove(this._dataElement.inputErrorClass);
+    inputElement.classList.remove(this._validationConfig.inputErrorClass);
     errorElement.textContent = "";
-    errorElement.classList.remove(this._dataElement.errorClass);
+    errorElement.classList.remove(this._validationConfig.errorClass);
   }
 
   // метод для проверки валидность ввода
@@ -52,11 +52,11 @@ export default class FormValidator {
     // Если есть хотя бы один невалидный инпут
     if (this._validateInput()) {
       // сделай кнопку неактивной
-      this._buttonElement.classList.add(this._dataElement.inactiveButtonClass);
+      this._buttonElement.classList.add(this._validationConfig.inactiveButtonClass);
       this._buttonElement.disabled = true;
     } else {
       // иначе сделай кнопку активной
-      this._buttonElement.classList.remove(this._dataElement.inactiveButtonClass);
+      this._buttonElement.classList.remove(this._validationConfig.inactiveButtonClass);
       this._buttonElement.disabled = false;
     }
   }
@@ -86,7 +86,7 @@ export default class FormValidator {
   }
 
   disabledButton() {
-    this._buttonElement.classList.add(this._dataElement.inactiveButtonClass);
+    this._buttonElement.classList.add(this._validationConfig.inactiveButtonClass);
     this._buttonElement.disabled = true;
   }
 
