@@ -63,10 +63,26 @@ export default class Api {
   }
 
   // Удаление карточки на сервере
-  deleteCard(id) {
-    return fetch(`${this._baseUrl}/cards/${id}`, {
-        method: "DELETE",
-        headers: this._headers,
+  deleteCard(data) {
+    return fetch(`${this._baseUrl}/cards/${data._id}`, {
+      method: "DELETE",
+      headers: this._headers,
     }).then(this._getJsonOrError);
-}
+  }
+
+  // Постановка лайка
+  putLikeCard(data) {
+    return fetch(`${this._baseUrl}/cards/${data._id}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then(this._getJsonOrError);
+  }
+
+  // Снятие лайка
+  deleteLikeCard(data) {
+    return fetch(`${this._baseUrl}/cards/${data._id}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then(this._getJsonOrError);
+  }
 }

@@ -37,8 +37,8 @@ export default class PopupWithForm extends Popup {
   // Визуализация индикатора сохранения формы (UX)
   renderLoadingView(loading, text) {
     if (loading) {
-      this._submitButton.disabled = true;
-      this._submitButton.textContent = text;
+        this._submitButton.disabled = true;
+        this._submitButton.textContent = text;
     } else {
       setTimeout(() => {
         this._submitButton.disabled = true;

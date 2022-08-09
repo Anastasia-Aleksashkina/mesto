@@ -23,6 +23,8 @@ import {
   dataElement,
 } from "../utils/constants.js";
 
+let userId;
+
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-47",
   headers: {
@@ -38,12 +40,42 @@ const openImage = (name, link) => {
 const imagePopup = new PopupWithImage(popupImage);
 imagePopup.setEventListeners();
 
-const createCard = (cardObj) => {
-  const card = new Card(cardObj, "#element-template", openImage, deleteMyCard);
+// Создание экземпляра карточки
+const createCard = (data) => {
+  const card = new Card(data, "#element-template", openImage, {
+    userId: userId,
+    handleDeleteCard: () => {
+      acceptPopup.open(data);
+      acceptPopup.setSubmitAction({
+        handleSubmitAction: () => {
+          api
+            .deleteCard(data)
+            .then(() => {
+              acceptPopup.close();
+              card.delete();
+            })
+            .catch((err) => console.log(err));
+        },
+      });
+    },
+    handleLikeCard: () => {
+      api.putLikeCard(data).then((res) => {
+        card.like();
+        card.likesCounter(res);
+      });
+    },
+    handleDisLikeCard: () => {
+      api.deleteLikeCard(data).then((res) => {
+        card.disLike();
+        card.likesCounter(res);
+      });
+    },
+  });
   const cardElement = card.generateCard();
   return cardElement;
 };
 
+// Рендер карточек
 const cardList = new Section(
   {
     renderer: (item) => {
@@ -73,7 +105,7 @@ function handlerCardSubmit(data) {
     .addCard(data)
     .then((res) => {
       cardList.addItem(createCard(res));
-      addCardPopup.close();
+      newCardPopup.close();
     })
     .catch((err) => {
       console.log(`Ошибка: ${err}`);
@@ -82,6 +114,12 @@ function handlerCardSubmit(data) {
       newCardPopup.renderLoadingView(false);
     });
 }
+
+// Попап подтверждения удаления моей карточки
+const acceptPopup = new PopupWithAccept(popupAccept, {
+  submitForm: () => acceptPopup.submitAction(),
+});
+acceptPopup.setEventListeners();
 
 // Попап изменения профиля
 const profilePopup = new PopupWithForm(popupUser, {
@@ -93,6 +131,15 @@ const profileInfo = new UserInfo({
   nameSelector: ".profile__user-name",
   aboutSelector: ".profile__user-about",
   avatarSelector: ".profile__avatar-img",
+});
+
+// Открытие попапа изменения профиля
+profileButton.addEventListener("click", () => {
+  const info = profileInfo.getUserInfo();
+  profilePopup.setInputValues(info);
+  profilePopup.open();
+  userFormValidation.resetValidation();
+  userFormValidation.disabledButton();
 });
 
 // Отправка данных формы изменения профиля
@@ -110,20 +157,17 @@ function handlerProfileSubmit(data) {
     });
 }
 
-// Открытие попапа изменения профиля
-profileButton.addEventListener("click", () => {
-  const info = profileInfo.getUserInfo();
-  profilePopup.setInputValues(info);
-  profilePopup.open();
-  userFormValidation.resetValidation();
-  userFormValidation.disabledButton();
-});
-
 // Попап изменения аватара
 const avatarPopup = new PopupWithForm(popupAvatar, {
   submitForm: handlerAvatarSubmit,
 });
 avatarPopup.setEventListeners();
+
+// Открытие попапа изменения аватара
+avatarButton.addEventListener("click", () => {
+  avatarPopup.open();
+  avatarFormValidation.resetValidation();
+});
 
 // Отправка данных формы изменения аватара
 function handlerAvatarSubmit(data) {
@@ -140,36 +184,10 @@ function handlerAvatarSubmit(data) {
     });
 }
 
-// Открытие попапа изменения аватара
-avatarButton.addEventListener("click", () => {
-  avatarPopup.open();
-  avatarFormValidation.resetValidation();
-});
-
-// Попап подтверждения удаления моей карточки
-const acceptPopup = new PopupWithAccept(popupAccept, {
-  submitForm: deleteMyCard,
-});
-acceptPopup.setEventListeners();
-
-// Удаление карточки на сервере
-function deleteMyCard(card) {
-  api
-    .deleteCard(card.id)
-    .then(() => {
-      acceptPopup.close();
-      card.delete();
-    })
-    .catch((err) => console.log(err))
-}
-
-// Удаление нового места (появление окна с подтверждением и удаление)
-const acceptDeleteCard = (card) => {
-  acceptPopup.open(card);
-};
-
+// Получение данных сервера при загрузке страницы
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([data, cards]) => {
+    userId = data._id;
     profileInfo.setUserInfo(data);
     cardList.renderItem(cards.reverse());
   })
