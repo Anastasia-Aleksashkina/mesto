@@ -27,7 +27,7 @@ export default class Card {
     return cardTemplate;
   }
 
-// Готовим карточку к публикации
+  // Готовим карточку к публикации
   generateCard() {
     this._element = this._getTemplate();
     this._imageElement = this._element.querySelector(".element__image");
@@ -39,13 +39,15 @@ export default class Card {
     this._imageElement.alt = this._name;
     if (this._id !== this._ownerId) {
       this._deleteButton.style.display = "none";
+      console.log(this._id);
+      console.log(this._ownerId);
     }
     this.likesCounter(this._likes);
     this._setEventListeners();
     return this._element;
   }
 
-  // слушателей событий
+  // слушатели событий
   _setEventListeners() {
     this._likeButton.addEventListener("click", () => {
       if (this._likeButton.classList.contains("element__like_active")) {
@@ -78,9 +80,9 @@ export default class Card {
     this._likeButton.classList.remove("element__like_active");
   }
 
-  likesCounter(likes) {
-    if (likes.length === 0) {
-      this._likeCounter.textContent = "0";
+  likesCounter(likes)
+  { if (likes.length === 0) {
+      this._likeCounter.textContent = "";
     } else {
       this._likeCounter.textContent = likes.length;
     }

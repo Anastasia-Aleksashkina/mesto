@@ -60,14 +60,20 @@ const createCard = (data) => {
     },
     handleLikeCard: () => {
       api.putLikeCard(data).then((res) => {
+        card.likesCounter(res.likes);
         card.like();
-        card.likesCounter(res);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
       });
     },
     handleDisLikeCard: () => {
       api.deleteLikeCard(data).then((res) => {
+        card.likesCounter(res.likes);
         card.disLike();
-        card.likesCounter(res);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
       });
     },
   });
@@ -190,6 +196,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     userId = data._id;
     profileInfo.setUserInfo(data);
     cardList.renderItem(cards.reverse());
+    console.log(userId);
   })
   .catch((err) => console.log(err));
 
